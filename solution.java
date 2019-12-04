@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import Math;
 
 class Solution{
@@ -75,10 +76,11 @@ class Solution{
                 }
             }
         }
-        
+
         solution.print(aggregated_sum,3,4);
 
-        
+        ArrayList<String> path = solution.backtrack(aggregated_sum, 3, 4);
+        System.out.println(String.join("->", path));        
     }
 
     private int[][] cache(int n, int m){
@@ -99,6 +101,28 @@ class Solution{
             }
             System.out.println();
         }
+        System.out.println();
     }
 
+    private ArrayList<String> backtrack(int[][] arr, int n, int m){
+
+        ArrayList<String> path = new ArrayList();
+
+        n--;m--;
+        while(n>0 || m>0){
+
+            path.add(n+","+m);
+            
+            
+            if(arr[Math.max(n-1,0)][m] < arr[n][Math.max(m-1,0)]) 
+                n--;
+            else                          
+                m--;
+            
+        }
+        path.add("0,0");
+        
+        return path;
+
+    }
 }
