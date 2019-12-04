@@ -33,7 +33,7 @@ class Solution{
     *          dp[0][0]+dp[0][1]+dp[0][2] = 3+2+1 + current element(which is 2)
     *          
     *          BUT! to any given node two possible paths exist, one from the upper-side cell [i-1], the other from the left-side cell [j-1].
-    *          Solution? take the minimum of those two aggregate sum! ezpz.
+    *          Solution? take the minimum of the two cells! ezpz.
     * 
     *      A possible solution to this problem is the following aggregated values represented in a two dimensional array
     *      
