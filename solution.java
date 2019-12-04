@@ -81,6 +81,8 @@ class Solution{
 
         ArrayList<String> path = solution.backtrack(aggregated_sum, 3, 4);
         System.out.println(String.join("->", path));        
+
+        return;
     }
 
     private int[][] cache(int n, int m){
@@ -110,19 +112,14 @@ class Solution{
 
         n--;m--;
         while(n>0 || m>0){
-
             path.add(n+","+m);
-            
             
             if(arr[Math.max(n-1,0)][m] < arr[n][Math.max(m-1,0)]) 
                 n--;
             else                          
-                m--;
-            
+                m--;    
         }
         path.add("0,0");
-        
         return path;
-
     }
 }
