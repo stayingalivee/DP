@@ -1,7 +1,5 @@
 import Math;
 
-
-
 class Solution{
 
     /**
@@ -52,8 +50,55 @@ class Solution{
     *       path.append(min(aggregated_sum[i-1][j], aggregaated_sum[i][j-1]))
     *
     */
-
+    
     public static void main(String[] args) {
+
+        Solution solution = new Solution();
+        int[][] aggregated_sum = solution.cache(3,4);
+
+        int[][] input = {{3,2,1,3},
+                         {1,9,2,3},
+                         {9,1,5,4}};
+        solution.print(input,3,4);
+
+        for(int i=0;i<3;i++){
+            for(int j=0;j<4;j++){
+                
+                if(i==0 && j==0){
+                    aggregated_sum[i][j] = input[i][j];
+                } else if (j==0){
+                    aggregated_sum[i][j] = aggregated_sum[i-1][j] + input[i][j];
+                } else if (i==0){
+                    aggregated_sum[i][j] = aggregated_sum[i][j-1] + input[i][j];
+                } else  {
+                    aggregated_sum[i][j] = Math.min(aggregated_sum[i-1][j],aggregated_sum[i][j-1]) + input[i][j];
+                }
+            }
+        }
+        
+        solution.print(aggregated_sum,3,4);
+
         
     }
+
+    private int[][] cache(int n, int m){
+        int[][] cache = new int[n][m];
+        
+        for(int i=0;i<n; i++){
+            cache[i] = new int[m];
+        }
+
+        return cache;
+    }
+
+    private void print(int[][] arr, int n, int m){
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                System.out.print(arr[i][j]+",");
+            }
+            System.out.println();
+        }
+    }
+
 }
