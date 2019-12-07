@@ -42,12 +42,13 @@ class Solution{
     //
     // -----------------------------------------------
     // As shown above, we calculate the number of ways for each k such that 1 < k < N
-    // we use that previously calculated k's, that is, k-nums[index] to calculate current number of ways for the current k.
+    // we use that previously calculated number of ways for the sum k's, that is, k-nums[index] to calculate current number of ways for the current k.
     // THIS IS DYNAMIC PROGRAMMING, BITCH.
     // 
     // nums = {1,2,3}
     // N = 4
     // 
+    // we expect the answer to be:
     // dp[0] = 1
     // dp[1] = 1
     // dp[2] = 2
@@ -69,6 +70,20 @@ class Solution{
         return dp;
     }
 
+    private int[] NumofWays_pushForward(int N, int[] nums, int l){
+
+        int[] dp = new int[N+1];
+        dp[0] = 1;
+
+        for(int i=0; i<N; i++){
+            for(int j=0; j<l; j++){
+                
+                if(i+nums[j]< N+1) dp[i+nums[j]]+= dp[i];
+            }
+        }
+        return dp;
+    }
+
     public static void main( String[] args) {
 
         int N = 4;
@@ -77,6 +92,9 @@ class Solution{
         Solution sol = new Solution();
         int[] dp = sol.NumofWays(N, nums, 3);
         sol.print(dp, N+1);
+
+        dp = sol.NumofWays_pushForward(N, nums, 3);
+        sol.print(dp, N+1);
         
     }
 
@@ -84,5 +102,6 @@ class Solution{
         for (int i=0;i<length;i++){
             System.out.print(arr[i]+", ");
         }
+        System.out.println();
     }
 }
