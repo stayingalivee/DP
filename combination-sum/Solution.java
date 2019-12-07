@@ -22,26 +22,38 @@ class Solution{
     // what matters is the sum we have calculated so far, in this case it is 1+2 = 3
     
     // One possible representation for the problem is the following:
-    // i = the sum, int dp[i] = number of ways to get to that sum
+
+    // i = the sum, 
+    // int dp[i] = number of ways to get to that sum
+    
     // In this example int dp[4] equals to 7
     // int dp[sum] = number_of_ways
     // we can initialize dp[0] = 1 and build up our case with transitions,
     // so what transitions can we make? if we have sum = 10 (so far) and the allowed_numbers are 1,2,and 3
-    // then we can get sum 11, 12, or 13 
-
+    // then we can get sum 11, 12, or 13.
     //----------------------------------------------------
+
     // Implementation:
 
     // int dp[0] = 1
     // for i in 1..N:
     //     for x in nums:
-    //         dp[i] += dp[i-x] 
-
-    // N = 4
+    //         dp[i] += dp[i-x] (Check for negative indices in your code!!!!!!)
+    //
+    // -----------------------------------------------
+    // As shown above, we calculate the number of ways for each k such that 1 < k < N
+    // we use that previously calculated k's, that is, k-nums[index] to calculate current number of ways for the current k.
+    // THIS IS DYNAMIC PROGRAMMING, BITCH.
+    // 
     // nums = {1,2,3}
-    // => dp[0] = 1, dp[1] = 
-    
-    // TODO: continue
+    // N = 4
+    // 
+    // dp[0] = 1
+    // dp[1] = 1
+    // dp[2] = 2
+    // dp[3] = 4
+    // dp[4] = 7
+
 
     private int[] NumofWays(int N, int[] nums, int l){
         
@@ -50,12 +62,10 @@ class Solution{
 
         for (int i=1; i<=N; i++){
             for( int j=0; j<l; j++){
-                
-                if(i-nums[j]>=0)
-                    dp[i] += dp[i-nums[j]];         
+
+                if(i-nums[j]>=0) dp[i] += dp[i-nums[j]];         
             }
         }
-
         return dp;
     }
 
@@ -67,7 +77,6 @@ class Solution{
         Solution sol = new Solution();
         int[] dp = sol.NumofWays(N, nums, 3);
         sol.print(dp, N+1);
-
         
     }
 
