@@ -20,7 +20,6 @@ class Solution{
         return dp;
     }
 
-
     public static void main( String[] args) {
 
         int N = 4; // classic example N = 4  
