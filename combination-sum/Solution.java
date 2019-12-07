@@ -1,3 +1,5 @@
+import Math;
+
 class Solution{
 
     // Combination sum,
@@ -84,12 +86,12 @@ class Solution{
             }
         }
         return dp;
-    }
+    }    
 
     public static void main( String[] args) {
 
-        int N = 10; // classic exanoke N = 4  
-        int[] nums ={1,3,5}; // classic example nums = {1,2,3}
+        int N = 4; // classic exanoke N = 4  
+        int[] nums ={1,2,4}; // classic example nums = {1,2,3}
         int l = nums.length;
         
         Solution sol = new Solution();
@@ -98,7 +100,6 @@ class Solution{
 
         dp = sol.NumofWays_pushForward(N, nums, l);
         sol.print(dp, N+1);
-        
     }
 
     private void print(int[] arr, int length){
