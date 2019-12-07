@@ -8,13 +8,13 @@ class Solution{
         int[] dp = new int[N+1];
 
         dp[0] = 0;
-        for(int i=1;i<=N;i++) dp[i] = 1000; // should be INF, but 1000 is good for now, just don't be snarky and try >1000 values.
+        for(int i=1;i<=N;i++) dp[i] = 1000; // should be INF, but 1000 is good for now, just don't be a bitch and try >1000 values.
 
         for(int i=1; i<=N; i++){
             for(int j=0; j<l; j++){
                 
-
-                if(i-nums[j]>=0) dp[i] = Math.min(dp[i], dp[i-nums[j]]+1);         
+                if(i-nums[j]>=0) 
+                    dp[i] = Math.min(dp[i], dp[i-nums[j]]+1);         
             }
         }
         return dp;
