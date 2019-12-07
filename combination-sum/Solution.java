@@ -1,6 +1,5 @@
 class Solution{
 
-
     // Combination sum,
     // Given the target value N and an array of numbers, count the ways
     // to write N as a sum of those numbers.
@@ -55,6 +54,8 @@ class Solution{
     // dp[3] = 4
     // dp[4] = 7
 
+    // 
+
 
     private int[] NumofWays(int N, int[] nums, int l){
         
@@ -70,6 +71,7 @@ class Solution{
         return dp;
     }
 
+    // another method to count, we push values into future indices that we haven't visited yet.
     private int[] NumofWays_pushForward(int N, int[] nums, int l){
 
         int[] dp = new int[N+1];
@@ -86,14 +88,15 @@ class Solution{
 
     public static void main( String[] args) {
 
-        int N = 4;
-        int[] nums ={1,2,3};
+        int N = 10; // classic exanoke N = 4  
+        int[] nums ={1,3,5}; // classic example nums = {1,2,3}
+        int l = nums.length;
         
         Solution sol = new Solution();
-        int[] dp = sol.NumofWays(N, nums, 3);
+        int[] dp = sol.NumofWays(N, nums, l);
         sol.print(dp, N+1);
 
-        dp = sol.NumofWays_pushForward(N, nums, 3);
+        dp = sol.NumofWays_pushForward(N, nums, l);
         sol.print(dp, N+1);
         
     }
