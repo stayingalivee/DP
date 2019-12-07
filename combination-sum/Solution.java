@@ -43,7 +43,37 @@ class Solution{
     
     // TODO: continue
 
-    public static void main( String[] args) {
+    private int[] NumofWays(int N, int[] nums, int l){
         
+        int[] dp = new int[N+1];
+        dp[0] = 1;
+
+        for (int i=1; i<=N; i++){
+            for( int j=0; j<l; j++){
+                
+                if(i-nums[j]>=0)
+                    dp[i] += dp[i-nums[j]];         
+            }
+        }
+
+        return dp;
+    }
+
+    public static void main( String[] args) {
+
+        int N = 4;
+        int[] nums ={1,2,3};
+        
+        Solution sol = new Solution();
+        int[] dp = sol.NumofWays(N, nums, 3);
+        sol.print(dp, N+1);
+
+        
+    }
+
+    private void print(int[] arr, int length){
+        for (int i=0;i<length;i++){
+            System.out.print(arr[i]+", ");
+        }
     }
 }
