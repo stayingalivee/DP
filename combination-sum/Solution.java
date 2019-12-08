@@ -90,7 +90,7 @@ class Solution{
 
     public static void main( String[] args) {
 
-        int N = 4; // classic exanoke N = 4  
+        int N = 4; // classic envnoke N = 4  
         int[] nums ={1,2,4}; // classic example nums = {1,2,3}
         int l = nums.length;
         
