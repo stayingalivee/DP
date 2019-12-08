@@ -1,6 +1,6 @@
 import Math;
 
-class Solution{
+class OrderMatters{
 
     // Combination sum,
     // Given the target value N and an array of numbers, count the ways
@@ -94,7 +94,7 @@ class Solution{
         int[] nums ={1,2,4}; // classic example nums = {1,2,3}
         int l = nums.length;
         
-        Solution sol = new Solution();
+        OrderMatters sol = new OrderMatters();
         int[] dp = sol.NumofWays(N, nums, l);
         sol.print(dp, N+1);
 
