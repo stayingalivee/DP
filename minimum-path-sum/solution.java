@@ -77,6 +77,8 @@ class Solution{
             }
         }
 
+        
+
         solution.print(aggregated_sum,3,4);
 
         ArrayList<String> path = solution.backtrack(aggregated_sum, 3, 4);
