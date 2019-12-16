@@ -1,5 +1,27 @@
 import Math;
 
+/**
+ * In this problem, we want to figure out the minumum number of coins used that sums
+ * up to N.
+ * The explanation for this implementation is quite similar 
+ * to dp/combination-sum/OrderMatters.java problem,
+ * make sure you checked that problem first before proceeding with this code.
+ * --------------------------------------------------------------------------------
+ * 
+ * Let's try and visualize some values to get the intution behind the solution:
+ * 
+ * The setup:
+ * N = 4
+ * nums = {1,2,4}
+ * 
+ * -------------------------
+ * | N | 0 | 1 | 2 | 3 | 4 |
+ * +---+---+---+---+---+---+
+ * |min| 0 | 1 | 1 | 2 | 1 |
+ * -------------------------
+ * 
+
+ */
 
 class Solution{
 
