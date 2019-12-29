@@ -191,9 +191,17 @@ class Solution {
                 // remember that we dont care about all values of w and v.
                 // we only care about the values from v[0] to v[i] so far. (as well as for w)
                 
+                // j here is the max weight capacity we are solving for IN THIS PASS.
                 if(w[i-1] <= j) { // to prevent taking items with weights bigger than the current weight capacity.  
                     
-                    int emptyCapacity = j - w[i-1];
+                    
+                    int emptyCapacity = j - w[i-1]; // i.e. for item 2 (weight 4) and current j = 9 , 9-4 = 5 is the current empty usable capacity
+                    
+                    // dp[i-1][j] simulates not taking the current item wth index i-1, 
+                    // ! v[i-1]+dp[i-1][emptyCapacity] IS THE CRUX OF DYNAMIC PROGRAMMING.
+                    // ! we use older computed optimal values to solve current situation.
+                    // ! given emptyCapacity of 5, we already have computed what is the best value for that and stored it
+                    // ! in dp[i-1][emptyCapacity], so we just simply add that value with whatever currently we have in v[i-1]
                     dp[i][j] = Math.max(dp[i-1][j], v[i-1]+dp[i-1][emptyCapacity]);
 
                 } else { // if current item cannot be taken, then we just copy the values of the items from i-1 row
