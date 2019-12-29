@@ -90,8 +90,10 @@ class OrderMatters{
  * 
  * which means we can count the ways in i=1 BECAUSE WE HAVE WHATEVER WAY WE GOT TO i=1+jump
  * in this case jump = 2 and i =1, we can get 1+2 as a way to denote i=3 
+ * 
+ * 
  */
-
+    //TODO: F
     private int[] NumofWays(int N, int[] nums, int l){
         
         int[] dp = new int[N+1];
@@ -123,8 +125,8 @@ class OrderMatters{
 
     public static void main( String[] args) {
 
-        int N = 5;   classic example N = 5  
-        int[] nums ={1,2,4};   classic example nums = {1,2,4}
+        int N = 5;  // classic example N = 5  
+        int[] nums ={1,2,4};  // classic example nums = {1,2,4}
         int l = nums.length;
         
         OrderMatters sol = new OrderMatters();

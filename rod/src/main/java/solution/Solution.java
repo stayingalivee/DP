@@ -1,12 +1,38 @@
 package solution;
 
-
 import java.lang.Math;
-// Solving rod cutting problem.
-// First approach: recursion.
-// Second apptoach: dynamic programming.
+/**
+ * Solving rod cutting problem.
+ * First approach: recursion.
+ * Second apptoach: dynamic programming.
+ * This solution is meant to be a base-case study for the fundamental difference between recursion and dynamic programming.
+ * -------------------------------------------------------------------------------------------
+ * Solution
+ * -------------------------------------------------------------------------------------------
+ * given a metal rod with length n and a list of prices p[k] for each k where k in [1,n]
+ * determain how to cut the rod to maximize profit.
+ * 
+ * n = 5
+ * 
+ * <----- 5 ------>
+ * +--+--+--+--+--+
+ * |              |
+ * +--+--+--+--+--+
+ * 
+ * list of prices:
+ * 
+ * +-----------------------+
+ * | k | 1 | 2 | 3 | 4 | 5 |
+ * +-----------------------+
+ * | P | 2 | 3 | 5 | 7 | 8 |
+ * +-----------------------+
+ * 
+ * it's obvious that we can make the cut 1 1 1 1 1 and sell each piece 
+ * for 2$ resulting in 10$ total is the best we can do to maximize profit
+ * 
+ * 
+ */
 
-// This solution is meant to be a base case study for the fundamental difference between recursion and dynamic programming.
 
 class Solution{
 
