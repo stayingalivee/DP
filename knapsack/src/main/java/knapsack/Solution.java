@@ -1,6 +1,5 @@
 package main.java.knapsack;
 
-import javax.xml.crypto.dsig.keyinfo.KeyName;
 
 /**
  * 
@@ -161,27 +160,85 @@ import javax.xml.crypto.dsig.keyinfo.KeyName;
  */
 
 
-public class Solution {
+class Solution {
 
 
     public static void main(String[] args) {
         
+        System.out.println("main");
         int max = 10; // max allowed weight
         int n = 4; // total number of items
 
-        int[] v = {10, 40, 30, 50};
-        int[] w = {5, 4, 6, 3};
+        
+        int[] v = {10, 40, 30, 50};  // values
+        int[] w = {5, 4, 6, 3};      // weights
+
+        Solution solution = new Solution();
+        
+        solution.knapsack(v, w, max, n);
+    }
+
+    public void knapsack(int[] v, int[] w, int max, int n){
+        
+        int[][] dp = new int [n+1][max+1];
+        
+
+        for(int i=1; i<n+1; i++){
+
+            for(int j=1; j< max+1; j++){
+
+                // Solve for the current item i and max capacity j.
+                // remember that we dont care about all values of w and v.
+                // we only care about the values from v[0] to v[i] so far. (as well as for w)
+                
+                if(w[i-1] <= j) { // to prevent taking items with weights bigger than the current weight capacity.  
+                    
+                    int emptyCapacity = j - w[i-1];
+                    dp[i][j] = Math.max(dp[i-1][j], v[i-1]+dp[i-1][emptyCapacity]);
+
+                } else { // if current item cannot be taken, then we just copy the values of the items from i-1 row
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        printState(dp, n+1, max+1);
+
+    }
+   
+
+    private void printState(int[][] dp, int n, int m){
+        
+        System.out.print("       ");
+        for(int col =0; col< m; col ++) System.out.print(col+"  |  ");
+        System.out.println("\n-------------------------------------------------------------------------------");
 
 
-        new Solution().knapsack(v, w, max, n);
+        for(int i=0; i<n; i++){
+            System.out.print(i+" | ");
+            for(int j=0; j<m; j++){
+                System.out.print("   "+dp[i][j]+"  ");
+            }
+            System.out.println();
+        }
+    }
+
+    
+     /**
+     * We don't need to call this function anywhere in our code in java. the intital value for arrays is already 0. 
+     * If you're using some other langauge, this method may come in handy.
+     */
+    private void initializeState(int[][] dp, int n, int m){
+
+        for(int i=0; i<n; i++){
+            dp[i][0] = 0;
+        }
+        
+        for(int j=0; j<m; j++){
+            dp[0][j] = 0;
+        }
 
     }
 
-    private void knapsack(int[] v, int[] w, int max, int n){
-        
-        
-
-    }
 
 }
 
