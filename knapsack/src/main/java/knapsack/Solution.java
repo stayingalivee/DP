@@ -3,8 +3,13 @@ package main.java.knapsack;
 
 /**
  * 
- * knapsack problem
+ * This doc is inspired by
+ *  https://medium.com/@fabianterh/how-to-solve-the-knapsack-problem-with-dynamic-programming-eb88c706d3cf
  * 
+ * 
+ * ---------------------------------------------------------------------------
+ * --------------------------- Knapsack problem ------------------------------
+ * ---------------------------------------------------------------------------
  * Suppose you are a theif that broke into a house. the house has exactly 4 items. 
  * Being the cheap theif you are, you only have a shitty bag that can 
  * hold 10 units of weight, otherwise it'll be ripped from the extra weight.
@@ -26,15 +31,15 @@ package main.java.knapsack;
  * two states for our problem. Already we know that the solution is going to 
  * optimize some value in dp[i][j] states.
  * We also know that in DP, in order to solve for i = n (total number of items),
- * we need to solve for i-1 first, and proir to that i-2 and so on. This is also
- * true for w=10, we need to solve for w-1 -> 9 and prior tp that w-2... to 0
+ * we need to solve for i-1 first, and prior to that i-2 and so on. This is also
+ * true for w=10, we need to solve for w-1=9 and prior tp that w-2... to 0.
  * 
  * We can construct a two dimensional array (table) with columns being the current weight
- * and rows being the number of used items in the bag.
+ * and rows being the currently used items in the bag.
  * 
  * 
  * table of values mapped to weights:
- *   n =  1    2   3     4
+ *   n=   1    2    3    4
  * +---+----+----+----+----+
  * | V | 10 | 40 | 30 | 50 |
  * +---+----+----+----+----+
@@ -42,21 +47,21 @@ package main.java.knapsack;
  * +---+----+----+----+----+
  *
  * 
- *         <----------------- W ---------------------> 
- *   +---+---+---+---+---+---+---+---+---+---+---+---+
- *   |   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|
- *   +---+---+---+---+---+---+---+---+---+---+---+---+
- * ^ | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
- * | +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 1 | 0 |   |   |   |   |   |   |   |   |   |   |
- * | +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 2 | 0 |   |   |   |   |   |   |   |   |   |   |
- * n +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 3 | 0 |   |   |   |   |   |   |   |   |   |   |
- * | +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 4 | 0 |   |   |   |   |   |   |   |   |   |   |
- * v +---+---+---+---+---+---+---+---+---+---+---+---+
- * 
+ *                          <----------------- W ---------------------> 
+ *                    +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                    |   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|
+ *                    +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  ^ | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+ *                  | +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 1 | 0 |   |   |   |   |   |   |   |   |   |   |
+ *                  | +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 2 | 0 |   |   |   |   |   |   |   |   |   |   |
+ *                  n +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 3 | 0 |   |   |   |   |   |   |   |   |   |   |
+ *                  | +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 4 | 0 |   |   |   |   |   |   |   |   |   |   |
+ *                  v +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  
 
  *
  * At first glance we can build our base case where n = 0 and w = 0, for those cases
@@ -77,20 +82,20 @@ package main.java.knapsack;
  * In this case, it's pretty obvious that putting the item in the bag will maximize
  * the value (10 > 0, DUUH), and we get the following table
 
- *         <----------------- W ---------------------> 
- *   +---+---+---+---+---+---+---+---+---+---+---+---+
- *   |   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|
- *   +---+---+---+---+---+---+---+---+---+---+---+---+
- * ^ | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
- * | +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 1 | 0 | 0 | 0 | 0 | 0 | 10| 10| 10| 10| 10| 10|
- * | +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 2 | 0 |   |   |   |   |   |   |   |   |   |   |
- * n +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 3 | 0 |   |   |   |   |   |   |   |   |   |   |
- * | +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 4 | 0 |   |   |   |   |   |   |   |   |   |   |
- * v +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                          <----------------- W ---------------------> 
+ *                    +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                    |   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|
+ *                    +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  ^ | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+ *                  | +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 1 | 0 | 0 | 0 | 0 | 0 | 10| 10| 10| 10| 10| 10|
+ *                  | +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 2 | 0 |   |   |   |   |   |   |   |   |   |   |
+ *                  n +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 3 | 0 |   |   |   |   |   |   |   |   |   |   |
+ *                  | +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 4 | 0 |   |   |   |   |   |   |   |   |   |   |
+ *                  v +---+---+---+---+---+---+---+---+---+---+---+---+
  * 
  * ! so far so good
  * 
@@ -138,25 +143,24 @@ package main.java.knapsack;
  * is larger. and we have the following table updated
  * 
  *
- *         <----------------- W ---------------------> 
- *   +---+---+---+---+---+---+---+---+---+---+---+---+
- *   |   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|
- *   +---+---+---+---+---+---+---+---+---+---+---+---+
- * ^ | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
- * | +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 1 | 0 | 0 | 0 | 0 | 0 | 10| 10| 10| 10| 10| 10|
- * | +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 2 | 0 | 0 | 0 | 0 | 40| 40| 40| 40| 40| 50| 50|
- * n +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 3 | 0 |   |   |   |   |   |   |   |   |   |   |
- * | +---+---+---+---+---+---+---+---+---+---+---+---+
- * | | 4 | 0 |   |   |   |   |   |   |   |   |   |   |
- * v +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                          <----------------- W ---------------------> 
+ *                    +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                    |   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10|
+ *                    +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  ^ | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+ *                  | +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 1 | 0 | 0 | 0 | 0 | 0 | 10| 10| 10| 10| 10| 10|
+ *                  | +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 2 | 0 | 0 | 0 | 0 | 40| 40| 40| 40| 40| 50| 50|
+ *                  n +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 3 | 0 |   |   |   |   |   |   |   |   |   |   |
+ *                  | +---+---+---+---+---+---+---+---+---+---+---+---+
+ *                  | | 4 | 0 |   |   |   |   |   |   |   |   |   |   |
+ *                  v +---+---+---+---+---+---+---+---+---+---+---+---+
  * 
  *
  * Now go ahead and fill the rest of the table.
  * 
- * ----------------------------------------------------------------------
  */
 
 
@@ -183,9 +187,9 @@ class Solution {
         int[][] dp = new int [n+1][max+1];
         
 
-        for(int i=1; i<n+1; i++){
+        for(int i=1; i<n+1; i++){ // iterates on n in the table above
 
-            for(int j=1; j< max+1; j++){
+            for(int j=1; j< max+1; j++){ // iterates on w in the table above
 
                 // Solve for the current item i and max capacity j.
                 // remember that we dont care about all values of w and v.
@@ -197,11 +201,11 @@ class Solution {
                     
                     int emptyCapacity = j - w[i-1]; // i.e. for item 2 (weight 4) and current j = 9 , 9-4 = 5 is the current empty usable capacity
                     
-                    // dp[i-1][j] simulates not taking the current item wth index i-1, 
+                    // dp[i-1][j] simulates not taking the current item of index i-1, 
                     // ! v[i-1]+dp[i-1][emptyCapacity] IS THE CRUX OF DYNAMIC PROGRAMMING.
-                    // ! we use older computed optimal values to solve current situation.
+                    // ! we use older computed optimal values to solve current state.
                     // ! given emptyCapacity of 5, we already have computed what is the best value for that and stored it
-                    // ! in dp[i-1][emptyCapacity], so we just simply add that value with whatever currently we have in v[i-1]
+                    // ! in dp[i-1][5], so we just simply add that value with whatever currently we have in v[i-1]
                     dp[i][j] = Math.max(dp[i-1][j], v[i-1]+dp[i-1][emptyCapacity]);
 
                 } else { // if current item cannot be taken, then we just copy the values of the items from i-1 row
@@ -210,7 +214,6 @@ class Solution {
             }
         }
         printState(dp, n+1, max+1);
-
     }
    
 
