@@ -236,7 +236,7 @@ class Solution {
     
      /**
      * We don't need to call this function anywhere in our code in java. the intital value for arrays is already 0. 
-     * If you're using some other langauge, this method may come in handy.
+     * If you're using some other langauge, you might use this method.
      */
     private void initializeState(int[][] dp, int n, int m){
 
