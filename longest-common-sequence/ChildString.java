@@ -1,7 +1,5 @@
-package main.java.com.deadbeef.hackerrank.childstring;
 
 class ChildString{
-
 
     // Complete the commonChild function below.
     static int commonChild(String s1, String s2) {
@@ -15,14 +13,10 @@ class ChildString{
                     dp[i][k] = dp[i-1][k-1]+1;
                 else
                     dp[i][k] = Math.max(dp[i-1][k], dp[i][k-1]);
-
             }
         }
-
         return dp[s1.length()][s2.length()];
-
     }
-
 
     public static void main(String[] args) {
 
