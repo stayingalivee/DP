@@ -8,9 +8,6 @@ class ChildString{
 
         int[][] dp = new int[s1.length()+1][s2.length()+1];
 
-        for(int i=0;i<dp.length;i++) dp[i][0] = 0;
-        for(int i=0;i<dp[0].length;i++) dp[0][0] = 0;
-
         for(int i=1;i<dp.length;i++){
             for(int k=1; k<dp[0].length; k++){
                 
