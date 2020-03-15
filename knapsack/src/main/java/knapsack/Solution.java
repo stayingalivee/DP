@@ -169,7 +169,6 @@ class Solution {
 
     public static void main(String[] args) {
         
-        System.out.println("main");
         int max = 10; // max allowed weight
         int n = 4; // total number of items
 
@@ -177,12 +176,11 @@ class Solution {
         int[] v = {10, 40, 30, 50};  // values
         int[] w = {5, 4, 6, 3};      // weights
 
-        Solution solution = new Solution();
         
-        solution.knapsack(v, w, max, n);
+        knapsack(v, w, max, n);
     }
 
-    public void knapsack(int[] v, int[] w, int max, int n){
+    public static void knapsack(int[] v, int[] w, int max, int n){
         
         int[][] dp = new int [n+1][max+1];
         
