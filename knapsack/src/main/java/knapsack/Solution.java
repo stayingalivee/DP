@@ -26,7 +26,7 @@ package main.java.knapsack;
  * 
  * How'd you solve the problem?
  * 
- * it helps to think about dynamic programming as what is important so far
+ * it helps to think about dynamic programming as what is important so far (credits to errichto/youtube)
  * in this case, we care about the total value and the total weight. Hence we have
  * two states for our problem. Already we know that the solution is going to 
  * optimize some value in dp[i][j] states.
@@ -236,7 +236,7 @@ class Solution {
     
      /**
      * We don't need to call this function anywhere in our code in java. the intital value for arrays is already 0. 
-     * If you're using some other langauge, you might use this method.
+     * If you're using some other langauge, you might need use this method.
      */
     private void initializeState(int[][] dp, int n, int m){
 
