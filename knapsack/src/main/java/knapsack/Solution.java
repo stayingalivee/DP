@@ -22,7 +22,7 @@ package main.java.knapsack;
  * +---+----+----+----+----+
  * 
  * What is the best combination that maximizes value 
- * while keeping your shitty bag from being ripped. 
+ * while keeping your bag intact. 
  * 
  * How'd you solve the problem?
  * 
