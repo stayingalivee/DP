@@ -68,7 +68,7 @@ class Solution{
 		}
 	}
 
-	// Dynamic progrmming approach, no recursion, the solution is built up from a base case.
+	// Dynamic progrmming table approach, no recursion, the solution is built up from a base case.
 	public int bottom_up_cut_road(int[] p, int n)
 	{
 		
@@ -77,8 +77,14 @@ class Solution{
 		for(int i=1; i<=n; i++){
 
 			int q=-1;
+            
+            // for each element, iterate on all previous elements that sums up to the current element 
+            // and take the max sum among them.
+            // as we solve for a given element i, we can use it's value to solve an element i+k
+            // since we know that the price for i is the most optimal solution
+            // we can reuse precomputed values to solve the current i+k
 			for(int j=1; j<=i; j++){
-				q = Math.max(q, p[j-1] + r[i-j]);
+				q = Math.max(q, p[j-1] + r[i-j]); // j-1 because r has additional element for 0 length
 			}			
 			r[i] = q;
 		}
