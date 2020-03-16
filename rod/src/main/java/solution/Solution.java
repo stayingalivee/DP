@@ -1,6 +1,8 @@
 package solution;
 
 import java.lang.Math;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Solving rod cutting problem.
  * First approach: recursion.
@@ -69,7 +71,7 @@ class Solution{
 	}
 
 	// Dynamic progrmming table approach, no recursion, the solution is built up from a base case.
-	public int bottom_up_cut_road(int[] p, int n)
+	public int bottom_up_cut_rod(int[] p, int n)
 	{
 		
 		int[] r = new int[n+1];
@@ -91,12 +93,44 @@ class Solution{
 		return r[n];
 	}
 
+	public int bottom_up_cut_rod_with_parts(int[] p, int n){
+
+		int [] r = new int[n+1];
+		List<Integer> parts[] = new ArrayList[n+1];
+		for(int i=0; i<n+1;i++) parts[i] = new ArrayList<>();
+
+		r[0]=0; // no need in java, just or verbosity.
+		for(int i=1; i<=n; i++){
+			
+			int q = -1;
+			int part1 = 0, part2 = 0;
+			for(int j=1; j<=i; j++){
+				if(q<p[j-1] + r[i-j]){
+					q = p[j-1] + r[i-j];
+					part1 = j;
+					part2 = i-j;
+				}
+			}
+			r[i] = q;
+			parts[i].add(part1);
+			parts[i].add(part2);
+		}
+
+		for(int i=0;i<n+1; i++){
+			System.out.println("Rod with length "+ i );
+			System.out.println("\thas max value of "+ r[i] );
+			System.out.println("\tand parts of "+ String.join(", ", parts[i].toString()));
+		}
+
+		return r[n];
+	}
+
 	public static void main(String[] args) {
 		
 		int[] p = {1,5,8,9,10,17,17,20,24,30};
-		//int[] r = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}; // uncomment when memoized_cut_rod is called
+		int[] r = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}; // uncomment when memoized_cut_rod is called
 
-		int q = new Solution().bottom_up_cut_road(p, 10);
+		int q = new Solution().bottom_up_cut_rod_with_parts(p, 10);
 		System.out.println(q);
 
 	}
