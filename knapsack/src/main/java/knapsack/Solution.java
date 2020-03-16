@@ -184,7 +184,7 @@ class Solution {
         
         int[][] dp = new int [n+1][max+1];
         
-
+        // i = 0 already has value 0f 0, so we just skip it
         for(int i=1; i<n+1; i++){ // iterates on n in the table above
 
             for(int j=1; j< max+1; j++){ // iterates on w in the table above
@@ -199,7 +199,7 @@ class Solution {
                     
                     int emptyCapacity = j - w[i-1]; // i.e. for item 2 (weight 4) and current j = 9 , 9-4 = 5 is the current empty usable capacity
                     
-                    // dp[i-1][j] simulates not taking the current item of index i-1, 
+                    // dp[i-1][j] simulates not taking the current item of index i-1, above row 
                     // ! v[i-1]+dp[i-1][emptyCapacity] IS THE CRUX OF DYNAMIC PROGRAMMING.
                     // ! we use older computed optimal values to solve current state.
                     // ! given emptyCapacity of 5, we already have computed what is the best value for that and stored it
