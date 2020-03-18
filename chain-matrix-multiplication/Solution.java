@@ -22,16 +22,42 @@ class Solution{
     // the first parenthesization is 10x faster. 
     // Considering the above, find the minimum number of evaluations required to evlauate the whole chain of matrecis.
 
-    public static int solution(int[][] matrixDims){
 
-        int minCost = 0;
+    public static int[][] matrix_chain_min_cost(int[] dims){
 
+        int n = dims.length - 1;
+        int[][] dp = new int[n+1][n+1];
 
+        // start by checking 2 matrices, once all pairs of matrices are done (len=2).
+        // we can use the information calculated in pairs of matrices to evaluate the cost of len=3
+        // simmilarly, we can use the cost calculated by len=3 to calculate len=4, and so on.
+        // exmple:
+        // to evaluate a chain of len = 3 like A0*A1*A2
+        // 
 
-        
+        // len is the chain length we're examining for the current pass
+        for(int len = 2; len<=n; len++){
+            
+            // the offset at which we're going to start examining our chain from.
+            for(int offset = 1; offset <= n - len + 1; offset++){
 
-        
-        return minCost;
+                // offset --> end forms a sliding window with length = len.
+                int end = offset + len - 1;
+                dp[i][j] = Integer.MAX_VALUE;
+
+                // iterate on the window and examine each point for a potential possible parenthesization
+                // we assume that k is part of the left side parenthesis.
+                // i.e. A1, A2, A3, A4, k==1 --> (A1, A2) (A3, A4)
+                for(int k = i; k <= j - 1; k++){
+                    int scalar = dp[i][k] + dp[k+1][j] + (dims[i-1] * dims[k] * dims[j]); 
+                    if(scalar < dp[i][j]){
+                        dp[i][j] = scalar;
+                    }
+                }
+
+            }
+        }
+        return dp;
     }
 
     public static void main(String[] args) {
@@ -45,5 +71,19 @@ class Solution{
             {10, 20}, // A5
             {20, 25}  // A6
         };
+        
+        // consider using this instead of matrixDims.
+        // since Ai.columns == Aj.rows we can reduce the dims to one array instead.
+        // Given a Matrix Ai, dimensions are at position i-1, and i
+        int[] dims = {30, 35, 15, 5, 10, 20, 25};
+
+        int [][] cost = matrix_chain_min_cost(dims);
+
+        for(int i=0; i<cost.length; i++){
+            for(int j=0 ;j<cost[0].length; j++){
+                System.out.print("\t"+cost[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
