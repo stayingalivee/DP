@@ -8,7 +8,7 @@ class Solution{
     // A possible way of grouping the above expression is
     // (((A1*A2)*A3)*A4)*(A5*A6)
     // note that this parenthesization is arbitrary. A different parenthesization could yield less number of multiplications.
-    // The wat we parenthesize matrices can have a dramatic impact on the cost of evaluation. Proof:
+    // The way we parenthesize matrices can have a dramatic impact on the cost of evaluation. Proof:
     // Consider the following matrices;
     // +-------+-------+------+
     // | A1    | A2    | A3   | 
@@ -20,7 +20,7 @@ class Solution{
     // (A1*A2)*A3 --> 7500 evaluations
     // A1*(A2*A3) --> 75000 evaluations
     // the first parenthesization is 10x faster. 
-    // Considering the above, find the minimum number of evaluations required to evlauate the whole chain of matrecis.
+    // Considering the above, find the minimum number of evaluations required to evlauate the whole chain of matrices.
 
 
     public static int[][] matrix_chain_min_cost(int[] dims){
@@ -31,9 +31,6 @@ class Solution{
         // start by checking 2 matrices, once all pairs of matrices are done (len=2).
         // we can use the information calculated in pairs of matrices to evaluate the cost of len=3
         // simmilarly, we can use the cost calculated by len=3 to calculate len=4, and so on.
-        // exmple:
-        // to evaluate a chain of len = 3 like A0*A1*A2
-        // 
 
         // len is the chain length we're examining for the current pass
         for(int len = 2; len<=n; len++){
@@ -49,9 +46,16 @@ class Solution{
                 // we assume that k is part of the left side parenthesis.
                 // i.e. A1, A2, A3, A4, k==1 --> (A1, A2) (A3, A4)
                 for(int k = i; k <= j - 1; k++){
+
+                    // calculate the total cost of multiplication at the current parenthesization
                     int scalar = dp[i][k] + dp[k+1][j] + (dims[i-1] * dims[k] * dims[j]); 
+
+                    // update dp with the minimum parenthesization
                     if(scalar < dp[i][j]){
                         dp[i][j] = scalar;
+
+                        // TODO: add parenthesis position to construct the optimal parenthesization
+
                     }
                 }
 
