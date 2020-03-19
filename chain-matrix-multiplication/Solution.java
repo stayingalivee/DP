@@ -21,12 +21,20 @@ class Solution{
     // A1*(A2*A3) --> 75000 evaluations
     // the first parenthesization is 10x faster. 
     // Considering the above, find the minimum number of evaluations required to evlauate the whole chain of matrices.
+    private static class CostParanthesisPair{
+        int[][] dp;
+        int [][] parenthesis;
+        CostParanthesisPair(int[][] dp, int[][] parenthesis){
+            this.dp = dp;
+            this.parenthesis = parenthesis;
+        }
+    }
 
-
-    public static int[][] matrix_chain_min_cost(int[] dims){
+    public static CostParanthesisPair matrix_chain_min_cost(int[] dims){
 
         int n = dims.length - 1;
         int[][] dp = new int[n+1][n+1];
+        int[][] parenthesis = new int[n+1][n+1];
 
         // start by checking 2 matrices, once all pairs of matrices are done (len=2).
         // we can use the information calculated in pairs of matrices to evaluate the cost of len=3
@@ -40,29 +48,44 @@ class Solution{
 
                 // offset --> end forms a sliding window with length = len.
                 int end = offset + len - 1;
-                dp[i][j] = Integer.MAX_VALUE;
+                dp[offset][end] = Integer.MAX_VALUE;
 
                 // iterate on the window and examine each point for a potential possible parenthesization
                 // we assume that k is part of the left side parenthesis.
                 // i.e. A1, A2, A3, A4, k==1 --> (A1, A2) (A3, A4)
-                for(int k = i; k <= j - 1; k++){
+                for(int k = offset; k <= end - 1; k++){
 
                     // calculate the total cost of multiplication at the current parenthesization
-                    int scalar = dp[i][k] + dp[k+1][j] + (dims[i-1] * dims[k] * dims[j]); 
+                    int scalar = dp[offset][k] + dp[k+1][end] + (dims[offset-1] * dims[k] * dims[end]); 
 
-                    // update dp with the minimum parenthesization
-                    if(scalar < dp[i][j]){
-                        dp[i][j] = scalar;
+                    // update dp with the minimum parenthesization cost
+                    if(scalar < dp[offset][end]){
+                        dp[offset][end] = scalar;
 
-                        // TODO: add parenthesis position to construct the optimal parenthesization
-
+                        // cache the minimum parenthesization position to construct the solution.
+                        parenthesis[offset][end] = k;
                     }
                 }
 
             }
         }
-        return dp;
+        return new CostParanthesisPair(dp, parenthesis);
     }
+
+    private static void printOptimalParenthesization(int[][] parenthesis, int i, int j){
+
+        if(i == j){
+            System.out.print("A"+i);
+        }
+        else{
+            System.out.print("(");
+            printOptimalParenthesization(parenthesis, i, parenthesis[i][j]);
+            printOptimalParenthesization(parenthesis, parenthesis[i][j] +1, j);
+            System.out.print(")");
+        }
+    }
+
+
 
     public static void main(String[] args) {
         
@@ -81,7 +104,9 @@ class Solution{
         // Given a Matrix Ai, dimensions are at position i-1, and i
         int[] dims = {30, 35, 15, 5, 10, 20, 25};
 
-        int [][] cost = matrix_chain_min_cost(dims);
+        CostParanthesisPair pair = matrix_chain_min_cost(dims);
+        int[][] cost = pair.dp;
+        int[][] parenthesis = pair.parenthesis;
 
         for(int i=0; i<cost.length; i++){
             for(int j=0 ;j<cost[0].length; j++){
@@ -89,5 +114,7 @@ class Solution{
             }
             System.out.println();
         }
+
+        printOptimalParenthesization(parenthesis, 1, 6);
     }
 }
