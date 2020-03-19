@@ -38,7 +38,7 @@ class Solution{
 
         // start by checking 2 matrices, once all pairs of matrices are done (len=2).
         // we can use the information calculated in pairs of matrices to evaluate the cost of len=3
-        // simmilarly, we can use the cost calculated by len=3 to calculate len=4, and so on.
+        // simmilarly, we can use the cost calculated by len=2 and len=3 to calculate len=4, and so on.
 
         // len is the chain length we're examining for the current pass
         for(int len = 2; len<=n; len++){
