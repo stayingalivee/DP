@@ -72,6 +72,30 @@ class Solution{
         return new CostParanthesisPair(dp, parenthesis);
     }
 
+        /**
+     * ((A1(A2*A3))((A4*A5)A6))
+     * The above is an example for a parenthesization that could be optimal.
+     * to construct such a prenthesization we're going to use int[][] parenthesization data structure that holds
+     * the indices of the optimal patenthesis.
+     * Namely, for an entry [i][j] the optimal parenthesis is at position k such that number of multiplicands is j-i+1 and i <= k < j.
+     * 
+     * for example, for the triplet A1, A2, A3
+     * Number of multiplicands is three "j=2, i=0 --> j=i+1 == 3", Entry to retireve k is [0][2], 
+     * and k could be 0 "as in (A1)(A2*A3)" or 1 "as in (A1*A2)(A3)"
+     * 
+     * For each entry [i][j]:
+     *  if i == j:
+     *      we're at a term Ai, we're gonna just print that term.
+     *  otherwise:
+     *      We need to print the expression "Ai * Ai+1 * .. * Ak * Ak+1 * .. * Aj"
+     *      Notice that Ak is the actual position when we need to parentesize on.
+     *          Also notice that parenthesis[i][j] equals k.
+     *      That said, we're gonna recursively call the function for: 
+     *          - "Ai * Ai+1 * .. * Ak", which we can do by passing k to the next upperbound (j index) function call, practically we can pass parenthesis[i][j].
+     *          - "Ak+1 * .. * Aj", which we can do by passing k+1 to the next lowerbound (i index) function call,  practically we can pass parenthesis[i][j] +1.
+     *      We also going to print actual parenthesis before and after the function calls, we assume that each expression with length j-i+1 != 1 is surrounded by parenthesis.
+     *  
+     */
     private static void printOptimalParenthesization(int[][] parenthesis, int i, int j){
 
         if(i == j){
