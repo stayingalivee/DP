@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 class Solution{
 
-    /**
+/**
  *  * A - Frog 1 /
  * 
  * Time Limit: 2 sec / Memory Limit: 1024 MB
@@ -89,6 +89,24 @@ class Solution{
         return cache[i];
     }
 
+    // Bottom-up Dynamic Programming approach.
+    private static int helper(int[] nums){
+
+        if(nums.length <=1)
+            return 0;
+
+        int[] dp = new int[nums.length];
+        dp[0] = 0; // not needed, just for verobsity.
+        dp[1] = Math.abs(nums[1] - nums[0]);
+
+        for(int i = 2; i < dp.length; i++){
+            dp[i] = Math.min(
+                Math.abs(nums[i] - nums[i - 1]) + dp[i - 1],
+                Math.abs(nums[i] - nums[i - 2]) + dp[i - 2]);
+        }
+        return dp[dp.length - 1];
+    }
+
     public static void main(String[] args) {
         
         Scanner in = new Scanner(System.in);
@@ -102,6 +120,7 @@ class Solution{
         int[] cache = new int[nums.length];
         Arrays.fill(cache, -1);
 
-        System.out.println(helper(nums, cache, nums.length - 1));
+        //System.out.println(helper(nums, cache, nums.length - 1));
+        System.out.println(helper(nums));
     }
 }
