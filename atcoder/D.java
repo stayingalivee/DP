@@ -26,10 +26,10 @@ class Main{
     }  
 
 
-    // space optimized version, weight is the dimension to dp
-    private static int solverOneDimension(int[] w, int[] v, int n, int max){
+    // space optimized version, weight is the dimension to dp   
+    private static long solverOneDimension(int[] w, int[] v, int n, int max){
         
-        int[] dp = new int[max + 1];
+        long[] dp = new long[max + 1];
         dp[0] = 0;
 
         for(int i = 1; i <= n ;i++){
@@ -42,7 +42,14 @@ class Main{
                     dp[weight_already+weight] = Math.max(dp[weight_already+weight], dp[weight_already] + value);
                 }
         }
-        return dp[max];
+
+        long answer = 0;
+        for(int i = 0; i <= max; i++) {
+            answer = Math.max(answer, dp[i]);
+        }        
+
+
+        return answer;
     }
 
 
