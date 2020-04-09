@@ -23,38 +23,26 @@ class Solution{
 
     public static int maxProfit(int[] prices) {
         
-        int self = 0;
-        int other = 0;
-        int diff = 0;
-        
-        for(int i=0; i< prices.length; i++){
-            for(int k =i+1 ;k< prices.length; k++){
-                if(prices[k]-prices[i] > diff){
-                    diff = prices[k]-prices[i];
-                    self = i;
-                    other = k;
-                }
-            }
-        }
-        
-        if(diff == 0 )
+        if(prices == null || prices.length == 0)
             return 0;
-        return prices[other] - prices[self];
-    }
 
-    public static in maxProfitHelper(int[] prices){
-        int n = prices.length;
-        int[] dp = new int[n];
-        dp[0] = 0; // verbose
+        return maxProfitHelper(prices);     
+    }
+    
+    
+    public static int maxProfitHelper(int[] prices){
+        
+        int prev = 0;
         int max = 0;
         
-        for(int i = 1; i < n; i++){
+        for(int i = 1; i < prices.length; i++){
+            
             int diff = prices[i] - prices[i-1];
-            if(dp[i-1]+diff >0){
-                dp[i] = diff+dp[i-1];
-                if(max<dp[i])
-                    max = dp[i];
+            if(max < diff+prev){
+                max = diff+prev;
             }
+            prev = diff+prev;
+            if(prev <0) prev = 0;
         }
         return max;
     }
