@@ -5,6 +5,7 @@ class Main{
 
      /*
      * https://atcoder.jp/contests/dp/tasks/dp_i
+     * ref: http://www.cforcoding.com/2010/08/coin-tosses-binomials-and-dynamic.html
      */ 
  
     public static void main(String[] args){
